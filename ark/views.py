@@ -21,6 +21,7 @@ from django.shortcuts import render
 from ark.forms import MintArkForm, UpdateArkForm
 from ark.models import Ark, Naan, Key, Shoulder
 from ark.utils import parse_ark, gen_prefixes, parse_ark_lookup
+from arklet.settings import env
 
 COLLISIONS = 10
 
@@ -157,14 +158,16 @@ def resolve_ark(request, ark: str):
             return HttpResponseRedirect(ark_prefix.url + suffix)
         else:
             if info_inflection or json_inflection:
-                return HttpResponseNotFound(f"ark:{ark_str} is unknown to this resolver.")
+                return HttpResponseNotFound(f"ark:{ark_str} metadata is unknown to this resolver.")
             try:
                 naan_obj = Naan.objects.get(naan=naan)
+                if env("ARKLET_HOST") == naan_obj.url:
+                    return HttpResponseNotFound(f"ark:{ark_str} is unknown to this resolver.")
                 return HttpResponseRedirect(
                     f"{naan_obj.url}/ark:/{ark_str}"
                 )
             except Naan.DoesNotExist:
-                return HttpResponseNotFound(f"ark:{ark_str} is unknown to this resolver.")
+                return HttpResponseNotFound(f"naan {naan} is unknown to this resolver.")
 
 """
 Return HTML human readable webpage information about the Ark object
