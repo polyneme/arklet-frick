@@ -152,7 +152,7 @@ creates the superuser
 
 ### Admin Panel Setup
 
-To continue the setup, you can access the Admin panel via web browser at `127.0.0.1:8000/admin`.
+To continue the setup, you can access the Admin panel via web browser at `127.0.0.1:8001/admin`.
 
 Create a NAAN and an associated API key.
 
