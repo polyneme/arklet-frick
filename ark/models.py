@@ -10,6 +10,8 @@ from django.db import models
 
 from ark.forms import UpdateArkForm, validate_shoulder
 from ark.utils import generate_noid, noid_check_digit
+from arklet.settings import env
+
 
 class Naan(models.Model):
     naan = models.PositiveBigIntegerField(primary_key=True)
@@ -135,7 +137,7 @@ class Ark(models.Model):
     
     @classmethod
     def create(cls, naan: Naan, shoulder: Shoulder):
-        noid = generate_noid(os.environ.get("ARKLET_NOID_LENGTH", 8))
+        noid = generate_noid(env("ARKLET_NOID_LENGTH"))
         ark_prefix = f"{naan.naan}{shoulder.shoulder}"
         base_ark_string = f"{ark_prefix}{noid}"
         check_digit = noid_check_digit(base_ark_string)
