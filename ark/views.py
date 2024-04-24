@@ -13,7 +13,7 @@ from django.http import (
     HttpResponseNotAllowed,
     HttpResponseRedirect,
     HttpResponseServerError,
-    JsonResponse,
+    JsonResponse, HttpResponseNotFound,
 )
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
@@ -157,7 +157,7 @@ def resolve_ark(request, ark: str):
             return HttpResponseRedirect(ark_prefix.url + suffix)
         else:
             if info_inflection or json_inflection:
-                raise Http404
+                return HttpResponseNotFound(f"ark:{ark_str} unknown to this resolver")
             try:
                 naan_obj = Naan.objects.get(naan=naan)
                 return HttpResponseRedirect(
