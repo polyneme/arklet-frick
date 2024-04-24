@@ -33,3 +33,5 @@ var/
 postgres-data/
 
 *.swp
+
+docker/env.prod

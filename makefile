@@ -1,17 +1,17 @@
 default: local
 
 local:
-	docker-compose up --build
+	docker compose up --build
 
 prod: webserver
 
 redeploy: 
 	git pull
-	docker-compose -f docker-compose.nginx.yml up --build --detach
-	docker-compose -f docker-compose.nginx.yml --profile nginx restart nginx
+	docker compose -f docker-compose.nginx.yml up --build --detach
+	docker compose -f docker-compose.nginx.yml --profile nginx restart nginx
 
 webserver:
-	docker-compose -f docker-compose.nginx.yml --profile nginx up --build --detach
+	docker compose -f docker-compose.nginx.yml --profile nginx up --build --detach
 	sleep 2
 	docker exec -it arklet-frick-nginx-1 /ssl_setup.sh
 
