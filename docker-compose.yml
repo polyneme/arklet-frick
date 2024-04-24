@@ -2,6 +2,7 @@ version: "3.7"
 
 services:
   postgres:
+    platform: linux/amd64
     container_name: arklet_db
     image: postgres:14-alpine
     env_file:
@@ -13,6 +14,7 @@ services:
       - "5432:5432"
 
   arklet-minter:
+    platform: linux/amd64
     container_name: arklet_minter
     restart: always
     build:
@@ -32,6 +34,7 @@ services:
       - "8001:8001"
 
   arklet-resolver:
+    platform: linux/amd64
     container_name: arklet_resolver
     restart: always
     build:
