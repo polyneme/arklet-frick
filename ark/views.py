@@ -157,16 +157,20 @@ def resolve_ark(request, ark: str):
             return HttpResponseRedirect(ark_prefix.url + suffix)
         else:
             if info_inflection or json_inflection:
-                return HttpResponseNotFound(f"Ark {ark_str} unknown to this resolver")
+                return HttpResponseNotFound(
+                    f"ark:{ark_str} is unknown to this resolver. "
+                    f"Try <https://n2t.net/ark:{ark_str}>?"
+                )
             try:
                 naan_obj = Naan.objects.get(naan=naan)
                 return HttpResponseRedirect(
                     f"{naan_obj.url}/ark:/{ark_str}"
                 )
             except Naan.DoesNotExist:
-                resolver = "https://n2t.net"
-                # TODO: more robust resolver URL creation
-                return HttpResponseRedirect(f"{resolver}/ark:/{ark_str}")
+                return HttpResponseNotFound(
+                    f"ark:{ark_str} is unknown to this resolver. "
+                    f"Try <https://n2t.net/ark:{ark_str}>?"
+                )
 
 
 """
