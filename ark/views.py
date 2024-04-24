@@ -161,7 +161,7 @@ def resolve_ark(request, ark: str):
                 return HttpResponseNotFound(f"ark:{ark_str} metadata is unknown to this resolver.")
             try:
                 naan_obj = Naan.objects.get(naan=naan)
-                if env("ARKLET_HOST") == naan_obj.url:
+                if naan_obj.url.endswith(env("ARKLET_HOST")):
                     return HttpResponseNotFound(f"ark:{ark_str} is unknown to this resolver.")
                 return HttpResponseRedirect(
                     f"{naan_obj.url}/ark:/{ark_str}"
