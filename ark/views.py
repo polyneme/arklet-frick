@@ -159,7 +159,7 @@ def resolve_ark(request, ark: str):
             if info_inflection or json_inflection:
                 return HttpResponseNotFound(
                     f"ark:{ark_str} is unknown to this resolver. "
-                    f"Try <https://n2t.net/ark:{ark_str}>?"
+                    f"Try \"https://n2t.net/ark:{ark_str}\"?"
                 )
             try:
                 naan_obj = Naan.objects.get(naan=naan)
@@ -169,7 +169,7 @@ def resolve_ark(request, ark: str):
             except Naan.DoesNotExist:
                 return HttpResponseNotFound(
                     f"ark:{ark_str} is unknown to this resolver. "
-                    f"Try <https://n2t.net/ark:{ark_str}>?"
+                    f"Try \"https://n2t.net/ark:{ark_str}\"?"
                 )
 
 
